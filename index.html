@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Image Upload</title>
+    <link href="css/bootstrap.css" rel="stylesheet" />
+</head>
+<body class="container" style="background-color:#f8f8f7">
+    
+        <div class="row">
+            <h1 class="text-center">Upload Image</h1>
+        </div>
+    <div class="row">
+        
+        <div class="col-md-6">
+            
+            <img id="previewImage" src="http://placehold.it/550x270&text=No+Attachment!" alt="" height="270px" width="550"/>
+        </div>
+        <div class="col-md-6">
+            <form role="form">
+                <div class="form-group">
+                    <label class="control-label" for="uploadImage">Select File</label>
+                    <input id="uploadImage" type="file" class="file">
+                </div>
+                
+                <button id="submitButton" type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script>
+        $('#uploadImage').change(function () {
+            if (this.files && this.files[0]) {
+                if (!this.files[0].type.startsWith('image/')) {
+                    $('#previewImage').attr('src', 'http://placehold.it/550x270&text=No+PreView!');
+                } else {
+                    var reader = new FileReader();
+                    reader.onload = imageLoad;
+                    reader.readAsDataURL(this.files[0]);
+                }
+            }
+
+        });
+        function imageLoad(e) {
+            console.log(e);
+            $('#previewImage').attr('src', e.target.result);
+        }
+    </script>	
+</body>
+
+</html>
