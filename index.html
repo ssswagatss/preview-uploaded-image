@@ -29,22 +29,26 @@
     </div>
     <script src="js/jquery.min.js"></script>
     <script>
+        
+        //Call the function each time the user changes a function
         $('#uploadImage').change(function () {
+            //Check if a file has been selected or not
             if (this.files && this.files[0]) {
-                if (!this.files[0].type.startsWith('image/')) {
-                    $('#previewImage').attr('src', 'http://placehold.it/550x270&text=No+PreView!');
-                } else {
+                //Check if the uploaded file is an Image file
+                if (this.files[0].type.startsWith('image/')) {
                     var reader = new FileReader();
-                    reader.onload = imageLoad;
                     reader.readAsDataURL(this.files[0]);
+                    reader.onloadend = function () {
+                                        $('#previewImage').attr('src', reader.result);
+                                        }     
+                } else {
+                    //If an image is not selected then show an other image. 
+                    $('#previewImage').attr('src', 'http://placehold.it/550x270&text=No+PreView!');                    
                 }
             }
 
         });
-        function imageLoad(e) {
-            console.log(e);
-            $('#previewImage').attr('src', e.target.result);
-        }
+        
     </script>	
 </body>
 
